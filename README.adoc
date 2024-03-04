@@ -2,6 +2,9 @@
 
 A simple demo ChatBot application that uses RAG (Retrieval-Augmented Generation) to supplement a locally running LLM (Large Language Model) with relevant *embeddings* to answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS).
 
+image::public/rag-bot-screen-01.png[]
+
+
 == Running the Application
 
 There are two ways to run the application: using the provided DocThere are two ways to run the application: using the provided Dockerfile or running the application locally.
