@@ -40,8 +40,83 @@ podman run --rm \
 
 This method requires Python 3.11 or higher and assumes you will use a virtual environment, or venv, called venv-chatbot to install the dependencies.
 
-.
+. Create a Python Virtual Environment (venv) `venv-chatbot`
++
 
+[source,sh]
+----
+python -m venv venv-chatbot
+----
++
+
+NOTE: This will create a new directory called `venv-chatbot` in your current working directory. `git` will ignore this directory by default as it is already added to your `.gitignore`.
+
+. Activate your new `venv`:
++
+
+[source,sh]
+----
+source venv-chatbot/bin/activate
+----
++
+
+NOTE: Your prompt should now show `(venv-chatbot)` to indicate the virtual environment is active. However this may vary depending on your shell.
+
+. Install the dependencies:
++
+ 
+[source,sh]
+----
+python -m pip install -r requirements.txt
+----
++
+
+.Sample Output (Your output may differ and include a message about upgrading pip)
+[source,texinfo]
+----
+<TRUNCATED>
+
+asn1-0.5.1 pyasn1-modules-0.3.0 pydantic-2.6.3 pydantic-core-2.16.3 pyjwt-2.8.0 pymupdf-1.23.26 pypika-0.48.9 pyproject_hooks-1.0.0 python-dateutil-2.9.0.post0 python-dotenv-1.0.1 python-engineio-4.9.0 python-graphql-client-0.4.3 python-multipart-0.0.6 python-socketio-5.11.1 regex-2023.12.25 requests-2.31.0 requests-oauthlib-1.3.1 rsa-4.9 safetensors-0.4.2 scikit-learn-1.4.1.post1 scipy-1.12.0 sentence_transformers-2.5.1 simple-websocket-1.0.0 six-1.16.0 sniffio-1.3.1 starlette-0.32.0.post1 sympy-1.12 syncer-2.0.3 tenacity-8.2.3 threadpoolctl-3.3.0 tiktoken-0.6.0 tokenizers-0.15.2 tomli-2.0.1 torch-2.2.1 tqdm-4.66.2 transformers-4.38.2 typer-0.9.0 typing-extensions-4.10.0 typing-inspect-0.9.0 uptrace-1.22.0 urllib3-2.2.1 uvicorn-0.25.0 uvloop-0.19.0 watchfiles-0.20.0 websocket-client-1.7.0 websockets-12.0 wrapt-1.16.0 wsproto-1.2.0 yarl-1.9.4 zipp-3.17.0
+----
+
+. Run the application:
++
+
+[source,sh]
+----
+chainlit run chatbot-rag.py
+----
++
+
+.Sample Output
+[source,texinfo]
+----
+<TROUNCATED>
+
+2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 50441146-a718-54ff-87a3-cc4f2d9deeec
+2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 1af3f131-98b2-54af-a3aa-44b2dc5ee1f4
+2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 1b9a3c21-9244-50bd-bc4a-c7032ca99a96
+2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 8be14300-bcbc-59e0-b82b-b38345ef0031
+Indexing stats: {'num_added': 110, 'num_updated': 0, 'num_skipped': 224, 'num_deleted': 110}
+2024-03-04 19:40:31 - Your app is available at http://localhost:7860
+----
+
+. Browse to `http://localhost:7860` to access the application.
+
+== Using the Application
+
+The application is a simple web interface that allows you to ask questions about Red Hat OpenShift AI and Red Hat Open Data Science (ODS). The application will use the locally running LLM and RAG to answer your questions.
+
+NOTE: The first time you ask a question it may take a few seconds to respond as the application will need to generate embeddings for the question and the documents in the database.
+
+=== Sample Questions (examples)
+
+. What is Red Hat OpenShift AI?
+. What is RH ODS?
+
+== Development
+
+TBD
 
 
 == Architecture
