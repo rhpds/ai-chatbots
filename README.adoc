@@ -7,7 +7,7 @@ image::public/rag-bot-screen-01.png[]
 
 == Running the Application
 
-There are two ways to run the application: using the provided DocThere are two ways to run the application: using the provided Dockerfile or running the application locally.
+There are two ways to run the application: using the provided Dockerfile or running the application locally.
 
 NOTE: Older or low-memory machines may have performance issues running the application. Ideally a relatively recent laptop, or machine, with at least 32GB of RAM locally.
 
