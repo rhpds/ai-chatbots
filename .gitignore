@@ -1,0 +1,6 @@
+__pycache__
+.files
+.vscode
+.DS_Store
+/rag-persist/
+venv-chatbot

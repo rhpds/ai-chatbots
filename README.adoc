@@ -1,0 +1,49 @@
+= Overview
+
+A simple demo ChatBot application that uses RAG (Retrieval-Augmented Generation) to supplement a locally running LLM (Large Language Model) with relevant *embeddings* to answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS).
+
+== Running the Application
+
+There are two ways to run the application: using the provided DocThere are two ways to run the application: using the provided Dockerfile or running the application locally.
+
+NOTE: Older or low-memory machines may have performance issues running the application. Ideally a relatively recent laptop, or machine, with at least 32GB of RAM locally.
+
+=== Common Prerequisites - The Local Large Language Model (LLM) and Runtime (Ollama)
+
+. Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
+
+. Start Ollama running on your local machine either via the Ollama App you downloaded or via the command line `ollama serve`.
+
+. Run the `mistral` LLM service on your local machine via `ollama run mistral`
+
+NOTE: The first time this will download the model and may take a few minutes, `mistral` is approximately 4GB in size. 
+
+=== Running the Application using Podman (or Docker)
+
+This is the *recommended* way to run the application and simplifies the Python dependencies.
+
+[source,sh]
+----
+podman run --rm \
+   --name ragbot \
+   -e OLLAMA_BASE_URL="http://host.docker.internal:11434" \
+   -p 7860:7860 \
+   ragnar:0.0.5
+----
+
+. Browse to `http://localhost:7860` to access the application.
+
+=== Running the Application Locally via Python
+
+This method requires Python 3.11 or higher and assumes you will use a virtual environment, or venv, called venv-chatbot to install the dependencies.
+
+.
+
+
+
+== Architecture
+
+* chainlit
+* chromadb - Chroma Database Vector Store to store and retrieve document chunks
+* LangChain
+* Hugging Face `sentance_transformers` - embeddings
