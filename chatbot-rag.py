@@ -46,7 +46,6 @@ def process_pdfs(pdf_storage_path: str):
         docs += text_splitter.split_documents(documents)
 
     doc_search = Chroma.from_documents(docs, embeddings_model)
-
     namespace = "chromadb/my_documents"
 
     #    file_path = os.path.abspath(os.getcwd()) + "\database.db"
@@ -93,7 +92,9 @@ model = ChatOllama(
 
 @cl.on_chat_start
 async def on_chat_start():
-    template = """Answer the question based only on the following context:
+    # template = """Answer the question based only on the following context:
+    template = """Answer the question giving priority to the following context if it is relevant.
+    If what follows does not answer the question silently ignore the following context and answer using your own knowledge:
 
     {context}
 
