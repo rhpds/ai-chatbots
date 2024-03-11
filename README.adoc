@@ -31,7 +31,7 @@ podman run --rm \
    --name ragbot \
    -e OLLAMA_BASE_URL="http://host.docker.internal:11434" \
    -p 7860:7860 \
-   ragnar:0.0.5
+   tonykay/ai-rag-chatbot:0.1.0
 ----
 
 . Browse to `http://localhost:7860` to access the application.
@@ -125,3 +125,25 @@ TBD
 * chromadb - Chroma Database Vector Store to store and retrieve document chunks
 * LangChain
 * Hugging Face `sentance_transformers` - embeddings
+*
+*
+*
+
+== Running with a bind mount (Work in Progress)
+
+Podman and Docker differ,
+
+Docker cmd:
+
+Podman cmd: 
+
+Add `--uidmap 1000:0:1 --uidmap 0:1:1000`
+```
+podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --rm --name ragnar -e OLLAMA_BASE_URL="http://host.docker.internal:11434" -v $(pwd):/home/user/app -p 7861:7860 tonykay/ai-rag-chatbot:0.1.0
+```
+
+
+
+https://github.com/containers/podman/issues/2898#issuecomment-934295483
+
+* 
