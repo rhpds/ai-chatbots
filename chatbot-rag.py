@@ -13,7 +13,7 @@ from langchain.schema.runnable import RunnablePassthrough, RunnableConfig
 from langchain.callbacks.base import BaseCallbackHandler
 # from langchain_community.llms.ollama import Ollama
 
-# from langchain.embeddings import GPT4AllEmbeddings
+from langchain.embeddings import GPT4AllEmbeddings
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.chat_models import ChatOllama
 import chainlit as cl
@@ -27,8 +27,8 @@ chunk_overlap = 50
 # embeddings_model = NomicEmbeddings(model="nomic-embed-text-v1.5")
 # TODO: Clean up old embedding code - leave for now 2024-03-01
 
-# embeddings_model = GPT4AllEmbeddings()
-embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings_model = GPT4AllEmbeddings()
+# embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 # GPT4AllEmbeddings()
 # sentence_transformers
 
