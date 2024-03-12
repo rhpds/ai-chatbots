@@ -106,15 +106,16 @@ async def on_chat_start():
         return "\n\n".join([d.page_content for d in docs])
 
     retriever = doc_search.as_retriever()
+    output_parser =  StrOutputParser()
 
-    runnable = (
+    chain = (
         {"context": retriever | format_docs, "question": RunnablePassthrough()}
         | prompt
         | model
-        | StrOutputParser()
+        | output_parser
     )
 
-    cl.user_session.set("runnable", runnable)
+    cl.user_session.set("runnable", chain)
 
 
 @cl.on_message

@@ -32,8 +32,16 @@ async def on_chat_start():
             ("human", "{question}"),
         ]
     )
-    runnable = prompt | model | StrOutputParser()
-    cl.user_session.set("runnable", runnable)
+    
+    output_parser =  StrOutputParser()
+
+    chain = (
+        prompt
+        | model
+        | output_parser
+    )
+
+    cl.user_session.set("runnable", chain)
 
 
 @cl.on_message
