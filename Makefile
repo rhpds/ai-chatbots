@@ -25,7 +25,8 @@ help: ## Show this help - technically unnecessary as `make` alone will do
 build : ##    EXTRA_ARGS='--squash --no-cache' for example
 	docker build \
     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
-    $(EXTRA_ARGS) .
+		--load \
+		$(EXTRA_ARGS) .
 
 setup-buildx : ## Setup buildx for multi platform builds
 setup-buildx : ## buildx needs to be setup before using in build-multi
