@@ -106,7 +106,7 @@ async def on_chat_start():
         return "\n\n".join([d.page_content for d in docs])
 
     retriever = doc_search.as_retriever()
-    output_parser =  StrOutputParser()
+    output_parser = StrOutputParser()
 
     chain = (
         {"context": retriever | format_docs, "question": RunnablePassthrough()}
@@ -115,6 +115,7 @@ async def on_chat_start():
         | output_parser
     )
     # Red Hat RAG Demo ChatBot
+    await cl.Message(content="See Readme tab for tips").send()
     cl.user_session.set("runnable", chain)
 
 

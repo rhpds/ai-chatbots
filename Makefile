@@ -24,13 +24,13 @@ help: ## Show this help - technically unnecessary as `make` alone will do
 
 
 run-llm-old :
-	cd  chatbots && chainlit run chatbot-llm.py --port 7002
+	cd  chatbot-llm && chainlit run chatbot-llm.py --port 7002
 
 run-llm :
-	(cd chatbots ; chainlit run chatbot-llm.py --port 7001 | tee /tmp/chatbot-rag.log &)
+	(cd chatbot-llm ; chainlit run chatbot-llm.py --port 7001 | tee /tmp/chatbot-rag.log &)
 
 run-rag :
-	(cd chatbots ; chainlit run chatbot-rag.py --port 7002 | tee /tmp/chatbot-rag.log &)
+	(cd chatbot-rag ; chainlit run chatbot-rag.py --port 7002 | tee /tmp/chatbot-rag.log &)
 
 run-both: run-llm run-rag
 
