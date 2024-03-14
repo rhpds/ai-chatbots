@@ -1,6 +1,5 @@
 from pathlib import Path
 
-# from langchain_openai import ChatOpenAI #, OpenAIEmbeddings
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema import StrOutputParser
 from langchain_community.document_loaders import (
@@ -11,10 +10,11 @@ from langchain.vectorstores.chroma import Chroma
 from langchain.indexes import SQLRecordManager, index
 from langchain.schema.runnable import RunnablePassthrough, RunnableConfig
 from langchain.callbacks.base import BaseCallbackHandler
-# from langchain_community.llms.ollama import Ollama
 
-from langchain.embeddings import GPT4AllEmbeddings
+# from langchain.embeddings import GPT4AllEmbeddings
+# from langchain_community.embeddings import GPT4AllEmbeddings
 from langchain_community.embeddings import HuggingFaceEmbeddings
+
 from langchain_community.chat_models import ChatOllama
 import chainlit as cl
 import config as cfg
@@ -23,14 +23,9 @@ import os
 chunk_size = 1024
 chunk_overlap = 50
 
-# embeddings_model = OpenAIEmbeddings()
-# embeddings_model = NomicEmbeddings(model="nomic-embed-text-v1.5")
 # TODO: Clean up old embedding code - leave for now 2024-03-01
-
-embeddings_model = GPT4AllEmbeddings()
-# embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-# GPT4AllEmbeddings()
-# sentence_transformers
+# embeddings_model = GPT4AllEmbeddings()
+embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 PDF_STORAGE_PATH = "./rag-inputs"
 
@@ -75,7 +70,7 @@ def process_pdfs(pdf_storage_path: str):
 
 
 doc_search = process_pdfs(PDF_STORAGE_PATH)
-# model = ChatOpenAI(model_name="gpt-4", streaming=True)
+
 # TODO: Move globals to config.py (and capitilize)
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", cfg.OLLAMA_BASE_URL)
 OLLAMA_MODEL = "mistral"

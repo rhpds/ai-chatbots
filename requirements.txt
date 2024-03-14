@@ -1,7 +1,6 @@
 chainlit
 chromadb
 langchain
-openai
+#gpt4all
 pymupdf
 sentence_transformers
-tiktoken

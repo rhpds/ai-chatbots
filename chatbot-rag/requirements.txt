@@ -1,7 +1,0 @@
-chainlit
-chromadb
-langchain
-openai
-pymupdf
-sentence_transformers
-tiktoken

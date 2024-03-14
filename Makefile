@@ -34,11 +34,28 @@ run-rag :
 
 run-both: run-llm run-rag
 
-build : ##    EXTRA_ARGS='--squash --no-cache' for example
-	docker build \
-    --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
-		--load \
-		$(EXTRA_ARGS) .
+# build : ##    EXTRA_ARGS='--squash --no-cache' for example
+# 	docker build \
+#     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
+# 		--load \
+# 		$(EXTRA_ARGS) .
+
+docker-run :
+	docker run \
+		--rm --name ragnar \
+		-e OLLAMA_BASE_URL="http://host.docker.internal:11434" \
+		-p 7001:7001 \
+		-p 7002:7002 \
+		-p 7003:7003 \
+		tonykay/ai-rag-chatbot:0.3.0
+
+docker-shell :
+	docker run \
+		-it --rm --name ragnar \
+		-p 7001:7001 \
+		-p 7002:7002 \
+		-p 7003:7003 \
+		tonykay/ai-rag-chatbot:0.3.0 bash
 
 setup-buildx : ## Setup buildx for multi platform builds
 setup-buildx : ## buildx needs to be setup before using in build-multi
@@ -52,7 +69,19 @@ build-multi : ##    EXTRA_ARGS='--squash --no-cache' for example
     --push \
     $(EXTRA_ARGS) .
 
+build-x86 : ## Do a docker based build
+	docker buildx build \
+    --platform linux/amd64 \
+    --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
+    --load \
+    $(EXTRA_ARGS) .
 
+build-arm : ## Do a docker based build
+	docker buildx build \
+    --platform linux/arm64/v8 \
+    --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
+    --load \
+    $(EXTRA_ARGS) .
 tag : ## Tag the image
 	docker tag $(IMAGE_NAME) $(REGISTRY)/$(IMAGE_NAME):latest
 
