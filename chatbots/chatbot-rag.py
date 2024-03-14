@@ -114,7 +114,7 @@ async def on_chat_start():
         | model
         | output_parser
     )
-
+    # Red Hat RAG Demo ChatBot
     cl.user_session.set("runnable", chain)
 
 

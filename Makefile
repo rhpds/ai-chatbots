@@ -22,6 +22,18 @@ help: ## Show this help - technically unnecessary as `make` alone will do
 # Thanks to victoria.dev for the above syntax
 # https://victoria.dev/blog/how-to-create-a-self-documenting-makefile/
 
+
+run-llm-old :
+	cd  chatbots && chainlit run chatbot-llm.py --port 7002
+
+run-llm :
+	(cd chatbots ; chainlit run chatbot-llm.py --port 7001 | tee /tmp/chatbot-rag.log &)
+
+run-rag :
+	(cd chatbots ; chainlit run chatbot-rag.py --port 7002 | tee /tmp/chatbot-rag.log &)
+
+run-both: run-llm run-rag
+
 build : ##    EXTRA_ARGS='--squash --no-cache' for example
 	docker build \
     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \

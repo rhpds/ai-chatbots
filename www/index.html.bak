@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Iframes Example</title>
+  <link rel="stylesheet" href="split.css">
+</head>  
+<body>
+
+<div id="iframe-container">
+  <iframe src="http://localhost:7001" style="width: 50%; height: 100vh;"></iframe>
+  
+  <iframe src="http://localhost:7002" style="width: 50%; height: 100vh;"></iframe>  
+</div>
+
+<script src="split.js"></script>
+<script>
+  Split(['#iframe-container', '#iframe-container iframe'])
+</script>
+
+</body>
+</html>

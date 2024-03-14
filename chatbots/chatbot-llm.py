@@ -6,6 +6,7 @@ from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
 
 import chainlit as cl
+from langchain_core.output_parsers import XMLOutputParser
 import config as cfg
 import os
 
@@ -32,16 +33,17 @@ async def on_chat_start():
             ("human", "{question}"),
         ]
     )
-    
-    output_parser =  StrOutputParser()
 
-    chain = (
-        prompt
-        | model
-        | output_parser
+    output_parser = StrOutputParser()
+
+    chain = prompt | model | output_parser
+
+    await cl.Message(content="### LLM Chatbot\nSee Readme tab for tips").send()
+
+    cl.user_session.set(
+        "runnable",
+        chain,
     )
-
-    cl.user_session.set("runnable", chain)
 
 
 @cl.on_message

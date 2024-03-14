@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/split.css">
+    <link rel="icon" type="image/svg+xml" href="https://demo.redhat.com/images/favicon.ico"/>
+  </head>
+    <body>
+    <div class="content">
+			<div class="split left">
+        <iframe id="llm" src="http://localhost:7001" width="100%" height="95%" style="border:none;">
+          <h2>LLM Chatbot (Mistral)</h2>  
+        </iframe>
+			</div>
+			<div class="split right">
+        <iframe id="rag" src="http://localhost:7002" width="50%" height="90%" style="border:none;">
+        <h2>RAG Chatbot (Mistral)</h2>  
+        </iframe>
+			</div>
+		</div>
+
+    <script>
+
+			document.getElementById("defaultOpen").click();
+
+			function openTerminal(evt, cityName) {
+				// Declare all variables
+				var i, tabcontent, tablinks;
+
+				// Get all elements with class="tabcontent" and hide them
+				tabcontent = document.getElementsByClassName("tabcontent");
+				for (i = 0; i < tabcontent.length; i++) {
+					tabcontent[i].style.display = "none";
+				}
+
+				// Get all elements with class="tablinks" and remove the class "active"
+				tablinks = document.getElementsByClassName("tablinks");
+				for (i = 0; i < tablinks.length; i++) {
+					tablinks[i].className = tablinks[i].className.replace(" active", "");
+				}
+
+				// Show the current tab, and add an "active" class to the button that opened the tab
+				document.getElementById(cityName).style.display = "block";
+				evt.currentTarget.className += " active";
+			}
+
+    </script>
+    <script src="https://unpkg.com/split.js/dist/split.min.js"></script>
+    <script>
+      Split(['.left', '.right'], {
+        sizes: [45,55],
+      });
+
+		  Split(['.top', '.bottom'], {
+        sizes: [65,35],
+        direction: 'vertical',
+      });
+    </script>
+    </body>
+</html>
