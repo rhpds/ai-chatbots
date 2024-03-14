@@ -1,8 +1,12 @@
 = Overview
 
-A simple demo ChatBot application that uses RAG (Retrieval-Augmented Generation) to supplement a locally running LLM (Large Language Model) with relevant *embeddings* to answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS).
+A simple demo ChatBot application that provides both an LLM and a RAG (Retrieval-Augmented Generation) based Chatbot to interact with a locally running LLM (Large Language Model).
 
-image::public/rag-bot-screen-01.png[]
+WARNING: Currently this is relatively unoptimized with certain inefficiencies regarding working with embeddings. This will be speeded up in future releases.
+
+With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS) that the pure LLM based Chatbot will struggle with.
+
+image::.images/rag-bot-screen-01.png[]
 
 
 == Running the Application
@@ -30,11 +34,29 @@ This is the *recommended* way to run the application and simplifies the Python d
 podman run --rm \
    --name ragbot \
    -e OLLAMA_BASE_URL="http://host.docker.internal:11434" \
-   -p 7860:7860 \
-   tonykay/ai-rag-chatbot:0.1.0
+   -p 7001:7001 \
+   -p 7002:7002 \
+   -p 7003:7003 \
+   tonykay/ai-rag-chatbot:0.4.0
 ----
 
-. Browse to `http://localhost:7860` to access the application.
+. Browse to your Chatbot of Choice - or both
+
+[Attributes]
+|===
+|Landing Page | URL 
+
+
+| LLM Chatbot (no RAG)
+| `http://localhost:7001`
+
+| RAG Chatbot 
+| `http://localhost:7002`
+
+| Both Chatbots side-by-side
+| `http://localhost:7003`
+|===
+
 
 === Running the Application Locally via Python
 
