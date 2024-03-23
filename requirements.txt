@@ -1,6 +1,6 @@
 chainlit
 chromadb
 langchain
-#gpt4all
 pymupdf
-sentence_transformers
+gpt4all
+# sentence_transformers # Alternative embedding library

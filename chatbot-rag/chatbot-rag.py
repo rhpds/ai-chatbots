@@ -2,20 +2,22 @@ from pathlib import Path
 
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema import StrOutputParser
-from langchain_community.document_loaders import (
-    PyMuPDFLoader,
-)
+from langchain_community.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.chroma import Chroma
 from langchain.indexes import SQLRecordManager, index
 from langchain.schema.runnable import RunnablePassthrough, RunnableConfig
 from langchain.callbacks.base import BaseCallbackHandler
-
-# from langchain.embeddings import GPT4AllEmbeddings
-# from langchain_community.embeddings import GPT4AllEmbeddings
-from langchain_community.embeddings import HuggingFaceEmbeddings
-
 from langchain_community.chat_models import ChatOllama
+
+
+# TODO: 2024-03-23 tok: Remove these from's once embedding lib finalized
+# from langchain_community.embeddings import GPT4AllEmbeddings
+# from langchain_community.embeddings import HuggingFaceEmbeddings
+# from sentence_transformers import SentenceTransformer
+
+from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+
 import chainlit as cl
 import config as cfg
 import os
@@ -25,8 +27,11 @@ chunk_overlap = 50
 
 # TODO: Clean up old embedding code - leave for now 2024-03-01
 # embeddings_model = GPT4AllEmbeddings()
-embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+# embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
+# embeddings_model = SentenceTransformer("all-MiniLM-L6-v2")
+
+embeddings_model = SentenceTransformerEmbeddings()
 PDF_STORAGE_PATH = "./rag-inputs"
 
 
@@ -96,6 +101,8 @@ async def on_chat_start():
     Question: {question}
     """
     prompt = ChatPromptTemplate.from_template(template)
+
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
     def format_docs(docs):
         return "\n\n".join([d.page_content for d in docs])
