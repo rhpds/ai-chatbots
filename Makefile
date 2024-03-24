@@ -63,7 +63,7 @@ setup-buildx : ## buildx needs to be setup before using in build-multi
 
 build-multi : ## Do a docker based build
 build-multi : ##    EXTRA_ARGS='--squash --no-cache' for example
-	docker buildx build \
+	DOCKER_BUILDKIT=1 docker buildx build \
     --platform linux/arm64/v8,linux/amd64 \
     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
     --push \
@@ -77,7 +77,7 @@ build-x86 : ## Do a docker based build
     $(EXTRA_ARGS) .
 
 build-arm : ## Do a docker based build
-	docker buildx build \
+	DOCKER_BUILDKIT=1 docker buildx build \
     --platform linux/arm64/v8 \
     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
     --load \
