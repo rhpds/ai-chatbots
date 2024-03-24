@@ -72,21 +72,32 @@ def process_pdfs(pdf_storage_path: str):
 doc_search = process_pdfs(PDF_STORAGE_PATH)
 
 # TODO: Move globals to config.py (and capitilize)
+
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", cfg.OLLAMA_BASE_URL)
 OLLAMA_MODEL = "mistral"
 
-model = ChatOllama(
-    model=OLLAMA_MODEL,
-    base_url=OLLAMA_BASE_URL,
-)
 
-#    streaming=True,
-#    TODO: Does ChatOllama support streaming?
-# base_url="http://localhost:11434",
+def setup_model():
+    """
+    setup_model() -> ChatOllama
+
+    Setup the Ollama model for the chatbot.
+    """
+
+    model = ChatOllama(
+        model=OLLAMA_MODEL,
+        base_url=OLLAMA_BASE_URL,
+    )
+
+    return model
 
 
-@cl.on_chat_start
-async def on_chat_start():
+def setup_prompt():
+    """
+    setup_prompt() -> ChatPromptTemplate
+    
+    Setup the prompt template for the chatbot.
+    """
     # template = """Answer the question based only on the following context:
     template = """Answer the question giving priority to the following context if it is relevant.
     If what follows does not answer the question silently ignore the following context and answer using your own knowledge:
@@ -96,12 +107,30 @@ async def on_chat_start():
     Question: {question}
     """
     prompt = ChatPromptTemplate.from_template(template)
+    return prompt
+
+    
+def setup_output_parser():
+    """
+    Setup the output parser for the chatbot.
+    """    
+    
+    output_parser = StrOutputParser()
+    return output_parser
+
+
+@cl.on_chat_start
+async def on_chat_start():
+
 
     def format_docs(docs):
         return "\n\n".join([d.page_content for d in docs])
 
     retriever = doc_search.as_retriever()
-    output_parser = StrOutputParser()
+
+    prompt = setup_prompt()
+    model = setup_model()
+    output_parser = setup_output_parser()
 
     chain = (
         {"context": retriever | format_docs, "question": RunnablePassthrough()}
