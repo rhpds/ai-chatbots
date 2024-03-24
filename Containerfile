@@ -2,8 +2,9 @@ FROM registry.access.redhat.com/ubi9/python-311:latest
 
 ENV HOME=/home/user
 ENV PATH=/home/user/.local/bin:$PATH
+ENV APP_HOME=/app
 ENV HF_HOME=/hugging_face
-ENV LD_LIBRARY_PATH="/usr/local/lib"
+ENV LD_LIBRARY_PATH=/usr/local/lib
 
 # TRANSFORMERS_CACHE=/app/embedding_models # TODO: Remove, legacy for finding embeddingds tok
 
@@ -38,7 +39,7 @@ RUN dnf remove sqlite3 -y \
   && rm -rf /var/cache/dnf /root/.cache
 
 USER 1001
-WORKDIR /app
+WORKDIR ${APP_HOME}
 COPY --chown=1001 . .
 RUN --mount=type=cache,target=/root/.cache \
   pip install --no-cache-dir -r requirements.txt && \
