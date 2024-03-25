@@ -14,7 +14,7 @@ if [ "$#" -eq 0 ]; then
 	)
 	(
 		cd ${APP_HOME}/www
-		python -m http.server 7003 | tee -a /tmp/ai-chatbots.log &
+		python -m http.server 7003 | tee -a /tmp/ai-chatbots.log
 	)
 else
 	exec "$@"

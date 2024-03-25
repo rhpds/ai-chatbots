@@ -71,14 +71,14 @@ python -m venv venv-chatbot
 ----
 +
 
-NOTE: This will create a new directory called `venv-chatbot` in your current working directory. `git` will ignore this directory by default as it is already added to your `.gitignore`.
+NOTE: This will create a new directory called `venv` in your current working directory. `git` will ignore this directory by default as it is already added to your `.gitignore`.
 
 . Activate your new `venv`:
 +
 
 [source,sh]
 ----
-source venv-chatbot/bin/activate
+source venv/bin/activate
 ----
 +
 
@@ -106,24 +106,31 @@ asn1-0.5.1 pyasn1-modules-0.3.0 pydantic-2.6.3 pydantic-core-2.16.3 pyjwt-2.8.0 
 
 [source,sh]
 ----
-chainlit run chatbot-rag.py
+./entrypoint.sh
 ----
+
 +
 
 .Sample Output
 [source,texinfo]
 ----
-<TROUNCATED>
+<TRUNCATED>
 
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 50441146-a718-54ff-87a3-cc4f2d9deeec
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 1af3f131-98b2-54af-a3aa-44b2dc5ee1f4
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 1b9a3c21-9244-50bd-bc4a-c7032ca99a96
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 8be14300-bcbc-59e0-b82b-b38345ef0031
-Indexing stats: {'num_added': 110, 'num_updated': 0, 'num_skipped': 224, 'num_deleted': 110}
-2024-03-04 19:40:31 - Your app is available at http://localhost:7860
+2024-03-25 06:48:52 - Use pytorch device_name: mps
+2024-03-25 06:48:54 - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+File path is /Users/tok/Dropbox/PARAL/Projects/redhat-rag-demo/ai-chatbots/chatbot-rag/rag-persist/record_manager_cache.sql
+Indexing stats: {'num_added': 334, 'num_updated': 0, 'num_skipped': 0, 'num_deleted': 0}
+2024-03-25 06:49:01 - Your app is available at http://localhost:7002
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+::1 - - [25/Mar/2024 06:49:51] "GET / HTTP/1.1" 200 -
 ----
 
-. Browse to `http://localhost:7860` to access the application.
+. Browse to `http://localhost:7003` to access the application. The right hand iFrame will show the RAG Chatbot and the left hand iFrame will show the LLM Chatbot.
+
+NOTE: The LLM Chatbot is available at `http://localhost:7001` and the RAG Chatbot is available at `http://localhost:7002` if you prefer to use them separately. And that RAG Chatbot can take a few moments to start.
 
 == Using the Application
 
