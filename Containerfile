@@ -5,6 +5,7 @@ ENV PATH=/home/user/.local/bin:$PATH
 ENV APP_HOME=/app
 ENV HF_HOME=/hugging_face
 ENV LD_LIBRARY_PATH=/usr/local/lib
+ENV ANONYMIZED_TELEMETRY=False
 
 EXPOSE 7001
 EXPOSE 7002
