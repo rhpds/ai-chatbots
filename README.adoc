@@ -4,7 +4,7 @@ A simple demo ChatBot application that provides both an LLM and a RAG (Retrieval
 
 WARNING: Currently this is relatively unoptimized with certain inefficiencies regarding working with embeddings. This will be speeded up in future releases.
 
-With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS) that the pure LLM based Chatbot will struggle with.
+With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS) that the pure LLM-based Chatbot will struggle with.
 
 image::.images/rag-bot-screen-01.png[]
 
@@ -37,7 +37,7 @@ podman run --rm \
    -p 7001:7001 \
    -p 7002:7002 \
    -p 7003:7003 \
-   tonykay/ai-rag-chatbot:0.4.0
+   tonykay/ai-rag-chatbot:0.6.6
 ----
 
 . Browse to your Chatbot of Choice - or both
@@ -62,7 +62,7 @@ podman run --rm \
 
 This method requires Python 3.11 or higher and assumes you will use a virtual environment, or venv, called venv-chatbot to install the dependencies.
 
-. Create a Python Virtual Environment (venv) `venv-chatbot`
+. Create a Python Virtual Environment (venv) `venv` for the Python dependencies
 +
 
 [source,sh]
@@ -71,18 +71,18 @@ python -m venv venv-chatbot
 ----
 +
 
-NOTE: This will create a new directory called `venv` in your current working directory. `git` will ignore this directory by default as it is already added to your `.gitignore`.
+NOTE: This will create a new directory called `venv-chatbot` in your current working directory. `git` will ignore this directory by default as it is already added to your `.gitignore`.
 
 . Activate your new `venv`:
 +
 
 [source,sh]
 ----
-source venv/bin/activate
+source venv-chatbot/bin/activate
 ----
 +
 
-NOTE: Your prompt should now show `(venv-chatbot)` to indicate the virtual environment is active. However this may vary depending on your shell.
+NOTE: Your prompt should now show `(venv-chatbot)` to indicate the virtual environment is active. However, this may vary depending on your shell.
 
 . Install the dependencies:
 +
@@ -125,7 +125,7 @@ huggingface/tokenizers: The current process just got forked, after parallelism h
 To disable this warning, you can either:
         - Avoid using `tokenizers` before the fork if possible
         - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
-::1 - - [25/Mar/2024 06:49:51] "GET / HTTP/1.1" 200 -
+::1 - - [25/Mar/2024 06:49:51] "GET grv/ HTTP/1.1" 200 -
 ----
 
 . Browse to `http://localhost:7003` to access the application. The right hand iFrame will show the RAG Chatbot and the left hand iFrame will show the LLM Chatbot.
@@ -140,8 +140,8 @@ NOTE: The first time you ask a question it may take a few seconds to respond as 
 
 === Sample Questions (examples)
 
-. What is Red Hat OpenShift AI?
-. What is RH ODS?
+. What is Red Hat ods
+. What is rh ods?
 
 == Development
 
@@ -151,8 +151,8 @@ TBD
 == Architecture
 
 * chainlit
-* chromadb - Chroma Database Vector Store to store and retrieve document chunks
 * LangChain
+* chromadb - Chroma Database Vector Store to store and retrieve document chunks
 * Hugging Face `sentance_transformers` - embeddings
 *
 *
