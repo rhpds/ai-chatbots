@@ -17,11 +17,13 @@ NOTE: Older or low-memory machines may have performance issues running the appli
 
 === Common Prerequisites - The Local Large Language Model (LLM) and Runtime (Ollama)
 
+. Clone this repository into a directory in your environment where you build a Python virtual machine. For example, this can be your home directory, or create a new directory specifically for this project then cd into it.
+
 . Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
 
 . Start Ollama running on your local machine either via the Ollama App you downloaded or via the command line `ollama serve`.
 
-. Run the `mistral` LLM service on your local machine via `ollama run mistral`
+. In a separate terminal, run the `mistral` LLM service on your local machine via `ollama run mistral`
 
 NOTE: The first time this will download the model and may take a few minutes, `mistral` is approximately 4GB in size. 
 
@@ -84,7 +86,7 @@ source venv-chatbot/bin/activate
 
 NOTE: Your prompt should now show `(venv-chatbot)` to indicate the virtual environment is active. However, this may vary depending on your shell.
 
-. Install the dependencies:
+. Install the dependencies using the requirements file. First:
 +
  
 [source,sh]
