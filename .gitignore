@@ -2,6 +2,6 @@ __pycache__
 .files
 .vscode
 .DS_Store
-/rag-persist/
+chatbot-rag/rag-persist/record_manager_cache.sql
 venv-chatbot
 venv
