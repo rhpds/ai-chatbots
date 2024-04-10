@@ -8,28 +8,55 @@ With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenSh
 
 image::.images/rag-bot-screen-01.png[]
 
+== Prerequisites
 
-== Running the Application
+* https://git-scm.com/[Git]
+* https://podman.io/ [Podman]
 
-There are two ways to run the application: using the provided Dockerfile or running the application locally.
+== System setup
+
+The local system needs to be prepared before running the ChatBot application. The following components are required:
+
+=== Clone repository
+
+1) Create a new directory (e.g. ai-rag)
+
+2) Clone the repository inside the new directory
+
+[source,sh]
+----
+ $ mkdir ai-rag
+ $ git clone https://github.com/rhpds/ai-chatbots.git
+----
+
+=== Run LLM Locally
+
+1) Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
+
+2) Start Ollama running on your local machine either via the Ollama App you downloaded or via the command line `ollama serve`.
+
+3) In a separate terminal window, launch the the `mistral` LLM
+
+[source,sh]
+----
+$ ollama run mistral
+----
+
+NOTE: The first time this will download the 'mistral' LLM and may take a few minutes. `mistral` is approximately 4GB in size.
+
+== Running the ChatBot application
+
+There are two methods to run the ChatBot application:
+
+1) Run in a container (easier method)
+2) Run using Python
 
 NOTE: Older or low-memory machines may have performance issues running the application. Ideally a relatively recent laptop, or machine, with at least 32GB of RAM locally.
 
-=== Common Prerequisites - The Local Large Language Model (LLM) and Runtime (Ollama)
-
-. Clone this repository into a directory in your environment where you build a Python virtual machine. For example, this can be your home directory, or create a new directory specifically for this project then cd into it.
-
-. Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
-
-. Start Ollama running on your local machine either via the Ollama App you downloaded or via the command line `ollama serve`.
-
-. In a separate terminal, run the `mistral` LLM service on your local machine via `ollama run mistral`
-
-NOTE: The first time this will download the model and may take a few minutes, `mistral` is approximately 4GB in size. 
 
 === Running the Application using Podman (or Docker)
 
-This is the *recommended* way to run the application and simplifies the Python dependencies.
+This is the *recommended* way to run the ChatBot application.
 
 [source,sh]
 ----
@@ -46,13 +73,13 @@ podman run --rm \
 
 [Attributes]
 |===
-|Landing Page | URL 
+|Landing Page | URL
 
 
 | LLM Chatbot (no RAG)
 | `http://localhost:7001`
 
-| RAG Chatbot 
+| RAG Chatbot
 | `http://localhost:7002`
 
 | Both Chatbots side-by-side
@@ -88,7 +115,7 @@ NOTE: Your prompt should now show `(venv-chatbot)` to indicate the virtual envir
 
 . Install the dependencies using the requirements file. First:
 +
- 
+
 [source,sh]
 ----
 python -m pip install -r requirements.txt
@@ -166,7 +193,7 @@ Podman and Docker differ,
 
 Docker cmd:
 
-Podman cmd: 
+Podman cmd:
 
 Add `--uidmap 1000:0:1 --uidmap 0:1:1000`
 ```
@@ -177,4 +204,4 @@ podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --rm --name ragnar -e OLLAMA_BASE
 
 https://github.com/containers/podman/issues/2898#issuecomment-934295483
 
-* 
+*
