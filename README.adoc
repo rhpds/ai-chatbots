@@ -9,7 +9,7 @@ With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenSh
 image::.images/rag-bot-screen-01.png[]
 
 == System setup
-****
+====
 The local system needs to be prepared before running the ChatBot application.
 
 *Pre-requisites*
@@ -47,7 +47,7 @@ $ ollama run mistral
 ----
 
 NOTE: The first time this will download the 'mistral' LLM and may take a few minutes. `mistral` is approximately 4GB in size.
-****
+====
 
 == Running the ChatBot application
 
