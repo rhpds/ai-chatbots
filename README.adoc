@@ -8,16 +8,19 @@ With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenSh
 
 image::.images/rag-bot-screen-01.png[]
 
-== Prerequisites
+== System setup
+****
+The local system needs to be prepared before running the ChatBot application.
+
+*Pre-requisites*
+
+Make sure your system is enabled with git and Podman (v5.0).
 
 * https://git-scm.com/[Git]
-* https://podman.io/ [Podman]
+* https://podman.io/[Podman]
 
-== System setup
 
-The local system needs to be prepared before running the ChatBot application. The following components are required:
-
-=== Clone repository
+*Clone repository*
 
 1) Create a new directory (e.g. ai-rag)
 
@@ -26,10 +29,11 @@ The local system needs to be prepared before running the ChatBot application. Th
 [source,sh]
 ----
  $ mkdir ai-rag
+ $ cd ai-rag
  $ git clone https://github.com/rhpds/ai-chatbots.git
 ----
 
-=== Run LLM Locally
+*Run LLM Locally*
 
 1) Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
 
@@ -43,18 +47,19 @@ $ ollama run mistral
 ----
 
 NOTE: The first time this will download the 'mistral' LLM and may take a few minutes. `mistral` is approximately 4GB in size.
+****
 
 == Running the ChatBot application
 
 There are two methods to run the ChatBot application:
 
-1) Run in a container (easier method)
-2) Run using Python
+. Run in a container (easier method)
+. Run using Python
 
 NOTE: Older or low-memory machines may have performance issues running the application. Ideally a relatively recent laptop, or machine, with at least 32GB of RAM locally.
 
 
-=== Running the Application using Podman (or Docker)
+=== *Method 1:* Running the Application using Podman (or Docker)
 
 This is the *recommended* way to run the ChatBot application.
 
@@ -87,7 +92,7 @@ podman run --rm \
 |===
 
 
-=== Running the Application Locally via Python
+=== *Method 2:* Running the Application locally via Python
 
 This method requires Python 3.11 or higher and assumes you will use a virtual environment, or venv, called venv-chatbot to install the dependencies.
 
