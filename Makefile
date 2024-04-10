@@ -3,7 +3,7 @@ IMAGE_NAME 						= ai-rag-chatbot
 # tmp whilst resolving creds and multi platform builds
 REGISTRY 							= docker.io/tonykay
 CONTAINER_RUNTIME 		= docker
-
+CONTAINER_FILE 				= Containerfile
 CONTAINER_HOSTNAME 		= ai-rag-chatbot
 VERSION								= 0.0.1
 # RHEL_VERSION 					= 8.7
@@ -59,31 +59,37 @@ docker-shell :
 
 setup-buildx : ## Setup buildx for multi platform builds
 setup-buildx : ## buildx needs to be setup before using in build-multi
-	docker buildx create --name mybuilder --use
+	docker buildx create --name multi-arch-builder --use
 
 build-multi : ## Do a docker based build
 build-multi : ##    EXTRA_ARGS='--squash --no-cache' for example
-	docker buildx build \
+	DOCKER_BUILDKIT=1 docker buildx build \
+		-f $(CONTAINER_FILE) \
     --platform linux/arm64/v8,linux/amd64 \
     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
     --push \
     $(EXTRA_ARGS) .
 
 build-x86 : ## Do a docker based build
+	DOCKER_BUILDKIT=1 docker buildx build \
 	docker buildx build \
+		-f $(CONTAINER_FILE) \
     --platform linux/amd64 \
     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
     --load \
     $(EXTRA_ARGS) .
 
-build-arm : ## Do a docker based build
-	docker buildx build \
+docker-build-arm : ## Depreciated
+docker-build-arm : ## Do a docker based build
+	DOCKER_BUILDKIT=1 docker buildx build \
+		-f $(CONTAINER_FILE) \
     --platform linux/arm64/v8 \
     --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
     --load \
     $(EXTRA_ARGS) .
+
 tag : ## Tag the image
-	docker tag $(IMAGE_NAME) $(REGISTRY)/$(IMAGE_NAME):latest
+	$(CONTAINER_RUNTIME) tag $(IMAGE_NAME) $(REGISTRY)/$(IMAGE_NAME):latest
 
 
 push : ## Push the image to remote registry

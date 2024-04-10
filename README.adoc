@@ -4,30 +4,59 @@ A simple demo ChatBot application that provides both an LLM and a RAG (Retrieval
 
 WARNING: Currently this is relatively unoptimized with certain inefficiencies regarding working with embeddings. This will be speeded up in future releases.
 
-With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS) that the pure LLM based Chatbot will struggle with.
+With relevant *embeddings* the RAG Chatbot will answer queries on Red Hat OpenShift AI and Red Hat Open Data Science (ODS) that the pure LLM-based Chatbot will struggle with.
 
 image::.images/rag-bot-screen-01.png[]
 
+== Prerequisites
 
-== Running the Application
+* https://git-scm.com/[Git]
+* https://podman.io/ [Podman]
 
-There are two ways to run the application: using the provided Dockerfile or running the application locally.
+== System setup
+
+The local system needs to be prepared before running the ChatBot application. The following components are required:
+
+=== Clone repository
+
+1) Create a new directory (e.g. ai-rag)
+
+2) Clone the repository inside the new directory
+
+[source,sh]
+----
+ $ mkdir ai-rag
+ $ git clone https://github.com/rhpds/ai-chatbots.git
+----
+
+=== Run LLM Locally
+
+1) Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
+
+2) Start Ollama running on your local machine either via the Ollama App you downloaded or via the command line `ollama serve`.
+
+3) In a separate terminal window, launch the the `mistral` LLM
+
+[source,sh]
+----
+$ ollama run mistral
+----
+
+NOTE: The first time this will download the 'mistral' LLM and may take a few minutes. `mistral` is approximately 4GB in size.
+
+== Running the ChatBot application
+
+There are two methods to run the ChatBot application:
+
+1) Run in a container (easier method)
+2) Run using Python
 
 NOTE: Older or low-memory machines may have performance issues running the application. Ideally a relatively recent laptop, or machine, with at least 32GB of RAM locally.
 
-=== Common Prerequisites - The Local Large Language Model (LLM) and Runtime (Ollama)
-
-. Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
-
-. Start Ollama running on your local machine either via the Ollama App you downloaded or via the command line `ollama serve`.
-
-. Run the `mistral` LLM service on your local machine via `ollama run mistral`
-
-NOTE: The first time this will download the model and may take a few minutes, `mistral` is approximately 4GB in size. 
 
 === Running the Application using Podman (or Docker)
 
-This is the *recommended* way to run the application and simplifies the Python dependencies.
+This is the *recommended* way to run the ChatBot application.
 
 [source,sh]
 ----
@@ -37,20 +66,20 @@ podman run --rm \
    -p 7001:7001 \
    -p 7002:7002 \
    -p 7003:7003 \
-   tonykay/ai-rag-chatbot:0.4.0
+   tonykay/ai-rag-chatbot:0.6.6
 ----
 
 . Browse to your Chatbot of Choice - or both
 
 [Attributes]
 |===
-|Landing Page | URL 
+|Landing Page | URL
 
 
 | LLM Chatbot (no RAG)
 | `http://localhost:7001`
 
-| RAG Chatbot 
+| RAG Chatbot
 | `http://localhost:7002`
 
 | Both Chatbots side-by-side
@@ -62,7 +91,7 @@ podman run --rm \
 
 This method requires Python 3.11 or higher and assumes you will use a virtual environment, or venv, called venv-chatbot to install the dependencies.
 
-. Create a Python Virtual Environment (venv) `venv-chatbot`
+. Create a Python Virtual Environment (venv) `venv` for the Python dependencies
 +
 
 [source,sh]
@@ -82,11 +111,11 @@ source venv-chatbot/bin/activate
 ----
 +
 
-NOTE: Your prompt should now show `(venv-chatbot)` to indicate the virtual environment is active. However this may vary depending on your shell.
+NOTE: Your prompt should now show `(venv-chatbot)` to indicate the virtual environment is active. However, this may vary depending on your shell.
 
-. Install the dependencies:
+. Install the dependencies using the requirements file. First:
 +
- 
+
 [source,sh]
 ----
 python -m pip install -r requirements.txt
@@ -106,24 +135,31 @@ asn1-0.5.1 pyasn1-modules-0.3.0 pydantic-2.6.3 pydantic-core-2.16.3 pyjwt-2.8.0 
 
 [source,sh]
 ----
-chainlit run chatbot-rag.py
+./entrypoint.sh
 ----
+
 +
 
 .Sample Output
 [source,texinfo]
 ----
-<TROUNCATED>
+<TRUNCATED>
 
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 50441146-a718-54ff-87a3-cc4f2d9deeec
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 1af3f131-98b2-54af-a3aa-44b2dc5ee1f4
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 1b9a3c21-9244-50bd-bc4a-c7032ca99a96
-2024-03-04 19:40:30 - Delete of nonexisting embedding ID: 8be14300-bcbc-59e0-b82b-b38345ef0031
-Indexing stats: {'num_added': 110, 'num_updated': 0, 'num_skipped': 224, 'num_deleted': 110}
-2024-03-04 19:40:31 - Your app is available at http://localhost:7860
+2024-03-25 06:48:52 - Use pytorch device_name: mps
+2024-03-25 06:48:54 - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+File path is /Users/tok/Dropbox/PARAL/Projects/redhat-rag-demo/ai-chatbots/chatbot-rag/rag-persist/record_manager_cache.sql
+Indexing stats: {'num_added': 334, 'num_updated': 0, 'num_skipped': 0, 'num_deleted': 0}
+2024-03-25 06:49:01 - Your app is available at http://localhost:7002
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+::1 - - [25/Mar/2024 06:49:51] "GET grv/ HTTP/1.1" 200 -
 ----
 
-. Browse to `http://localhost:7860` to access the application.
+. Browse to `http://localhost:7003` to access the application. The right hand iFrame will show the RAG Chatbot and the left hand iFrame will show the LLM Chatbot.
+
+NOTE: The LLM Chatbot is available at `http://localhost:7001` and the RAG Chatbot is available at `http://localhost:7002` if you prefer to use them separately. And that RAG Chatbot can take a few moments to start.
 
 == Using the Application
 
@@ -133,8 +169,8 @@ NOTE: The first time you ask a question it may take a few seconds to respond as 
 
 === Sample Questions (examples)
 
-. What is Red Hat OpenShift AI?
-. What is RH ODS?
+. What is Red Hat ods
+. What is rh ods?
 
 == Development
 
@@ -144,8 +180,8 @@ TBD
 == Architecture
 
 * chainlit
-* chromadb - Chroma Database Vector Store to store and retrieve document chunks
 * LangChain
+* chromadb - Chroma Database Vector Store to store and retrieve document chunks
 * Hugging Face `sentance_transformers` - embeddings
 *
 *
@@ -157,7 +193,7 @@ Podman and Docker differ,
 
 Docker cmd:
 
-Podman cmd: 
+Podman cmd:
 
 Add `--uidmap 1000:0:1 --uidmap 0:1:1000`
 ```
@@ -168,4 +204,4 @@ podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --rm --name ragnar -e OLLAMA_BASE
 
 https://github.com/containers/podman/issues/2898#issuecomment-934295483
 
-* 
+*
