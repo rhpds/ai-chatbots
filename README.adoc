@@ -12,15 +12,15 @@ image::.images/rag-bot-screen-01.png[]
 ====
 The local system needs to be prepared before running the ChatBot application.
 
-=====
+
 *Pre-requisites*
 
 Make sure your system is enabled with git and Podman (v5.0).
 
 * https://git-scm.com/[Git]
 * https://podman.io/[Podman]
-=====
-=====
+====
+====
 *Clone repository*
 
 1) Create a new directory (e.g. ai-rag)
@@ -33,8 +33,8 @@ Make sure your system is enabled with git and Podman (v5.0).
  $ cd ai-rag
  $ git clone https://github.com/rhpds/ai-chatbots.git
 ----
-=====
-=====
+====
+====
 *Run LLM Locally*
 
 1) Install the LLM runtime Ollama from link:https://ollama.com/[here] or follow the instructions in the link:https://github.com/ollama/ollama?tab=readme-ov-file[installation guide].
@@ -49,9 +49,8 @@ $ ollama run mistral
 ----
 
 NOTE: The first time this will download the 'mistral' LLM and may take a few minutes. `mistral` is approximately 4GB in size.
-=====
-
 ====
+
 
 == Running the ChatBot application
 
