@@ -187,13 +187,23 @@ TBD
 
 == Architecture
 
+*Key Components:*
+
 * chainlit
 * LangChain
 * chromadb - Chroma Database Vector Store to store and retrieve document chunks
 * Hugging Face `sentance_transformers` - embeddings
-*
-*
-*
+* Mistral 7B
+
+image::.images/demo-rag-rhdp-sd.png[Architecture Overview]
+RAG Demo Architecture Overview
+
+image::.images/demo-rag-ingest-rhdp-sd.png[Data Ingestion]
+RAG Demo Architecture for Document Ingestion
+
+image::.images/demo-rag-query-rhdp-sd.png[Augmented Query]
+RAG Demo Architecture for Augmented Query
+
 
 == Running with a bind mount (Work in Progress)
 
